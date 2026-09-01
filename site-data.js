@@ -48,10 +48,10 @@ window.SITE_DATA = {
   events: {
     club: [
       {
-        date: "2026-08-22",
+        date: "2026-09-19",
         title: "Still Sober Group &mdash; Speak and Eat and Bingo",
         time: "4:00 PM &ndash; 8:00 PM",
-          description: "Two Tacos with all the fixings and sides for $10. Plus a 50:50 raffle!"
+        description: "Two Chili Dogs with all the fixings and sides for $10. Plus a 50:50 raffle and Bingo!"
       },
       {
         recurrence: { frequency: "monthly", ordinal: "last", weekday: "Wednesday" },
