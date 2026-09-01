@@ -34,7 +34,7 @@ You can also open `index.html` directly in a browser.
 
 Verify all public club information in `site-data.js`, especially the phone number, email address, meeting schedule, accessibility information, event details, and address. Do not publish member/chair names or other personally identifying information in meeting data.
 
-The SEO files currently use the temporary GitHub Pages URL `https://rdm375.github.io/AlterationsClub/`. When a permanent custom domain is adopted, update the canonical, Open Graph, structured-data, robots, and sitemap URLs to the new domain.
+The production site uses the custom domain `https://clubalterations.org/`. Keep the canonical, Open Graph, structured-data, robots, and sitemap URLs on this domain.
 
 The footer states that Club Alterations is an independent clubhouse and is not operated by or affiliated with Alcoholics Anonymous World Services, Inc. The club should approve its final organizational language.
 
@@ -81,10 +81,10 @@ The site includes:
 1. Open Google Search Console and add the public site URL as a **URL-prefix property** (or add the whole domain as a Domain property if you control DNS).
 2. If you choose HTML-tag verification, Google will provide a token. In `index.html`, uncomment the `google-site-verification` meta tag and replace `TOKEN` with the exact value Google provides.
 3. Deploy the updated site and click **Verify** in Search Console.
-4. Submit `https://rdm375.github.io/AlterationsClub/sitemap.xml` in Search Console.
+4. Submit `https://clubalterations.org/sitemap.xml` in Search Console.
 5. Use URL Inspection to request indexing of the home page after the first deployment.
 
-When the site moves to a permanent custom domain, update every SEO URL and resubmit the sitemap in Search Console.
+If the canonical domain ever changes, update every SEO URL and resubmit the sitemap in Search Console.
 
 ### Anonymity
 

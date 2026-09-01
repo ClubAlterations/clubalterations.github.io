@@ -33,6 +33,7 @@ function applySiteData() {
   const links = {
     phone: `tel:${data.contact.phoneDial}`,
     email: `mailto:${data.contact.email}`,
+    website: data.contact.websiteUrl,
     googleMaps: `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`,
     appleMaps: `https://maps.apple.com/?q=${encodedAddress}`
   };

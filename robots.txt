@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://rdm375.github.io/AlterationsClub/sitemap.xml
+Sitemap: https://clubalterations.org/sitemap.xml

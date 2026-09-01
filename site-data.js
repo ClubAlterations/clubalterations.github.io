@@ -22,7 +22,9 @@ window.SITE_DATA = {
   contact: {
     phoneDisplay: "(210) 555-0123",
     phoneDial: "+12105550123",
-    email: "hello@ClubAlterations-PTX.org"
+    email: "clubalterations@gmail.com",
+    websiteDisplay: "clubalterations.org",
+    websiteUrl: "https://clubalterations.org/"
   },
 
   location: {
