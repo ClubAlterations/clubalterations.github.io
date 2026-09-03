@@ -32,7 +32,7 @@ You can also open `index.html` directly in a browser.
 
 ## Before publishing
 
-Verify all public club information in `site-data.js`, especially the phone number, email address, meeting schedule, accessibility information, event details, and address. Do not publish member/chair names or other personally identifying information in meeting data.
+Verify all public club information in `site-data.js`, especially the email address, social media links, meeting schedule, accessibility information, event details, and address. Do not publish member/chair names or other personally identifying information in meeting data.
 
 The production site uses the custom domain `https://clubalterations.org/`. Keep the canonical, Open Graph, structured-data, robots, and sitemap URLs on this domain.
 
@@ -55,7 +55,7 @@ address: {
 
 Changing those four values automatically updates every displayed club address as well as the Google Maps and Apple Maps links.
 
-The same applies to the phone number, email address, entrance information, parking information, accessibility note, club name/tagline, and meeting schedule.
+The same applies to the email address, social media links, entrance information, parking information, accessibility note, club name/tagline, and meeting schedule.
 
 ### Files
 

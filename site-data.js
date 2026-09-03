@@ -20,11 +20,13 @@ window.SITE_DATA = {
   },
 
   contact: {
-    phoneDisplay: "(210) 555-0123",
-    phoneDial: "+12105550123",
     email: "clubalterations@gmail.com",
     websiteDisplay: "clubalterations.org",
     websiteUrl: "https://clubalterations.org/"
+  },
+
+  social: {
+    facebook: "https://www.facebook.com/61594058156360/"
   },
 
   location: {
