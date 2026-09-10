@@ -9,7 +9,12 @@ window.SITE_DATA = {
     name: "Club Alterations",
     shortName: "CA",
     tagline: "Meeting space for recovery & fellowship",
-    description: "Club Alterations is an independent clubhouse in Pasadena, Texas, providing meeting space for independent Alcoholics Anonymous groups and other recovery groups."
+    description: "Club Alterations is a Texas nonprofit recovery clubhouse in Pasadena, Texas, providing meeting space for independent recovery groups from a variety of fellowships."
+  },
+
+  organization: {
+    nonprofitStatus: "Club Alterations is a Texas nonprofit corporation. An application for recognition of federal tax-exempt status has been submitted to the IRS and is currently pending.",
+    meetingWelcome: "We welcome independent recovery groups from a variety of fellowships and are actively expanding the meeting schedule."
   },
 
   address: {
@@ -39,6 +44,16 @@ window.SITE_DATA = {
     accessibility: "Ramp on the otherside of the church nextdoor."
   },
 
+
+  // Recovery fellowships/programs used by meeting entries.
+  // Add another code here once, then use that short code in each meeting.
+  fellowships: {
+    AA: "Alcoholics Anonymous",
+    NA: "Narcotics Anonymous",
+    CA: "Cocaine Anonymous",
+    CMA: "Crystal Meth Anonymous",
+    SLAA: "Sex and Love Addicts Anonymous"
+  },
 
   resources: {
     otherMeetings: [
@@ -86,26 +101,26 @@ window.SITE_DATA = {
 
   meetings: {
     Sunday: [
-        { time: "7:00 AM &ndash; 9:00 AM", name: "Want More, Do More Group", type: "Open · Discussion", language: "English" },
-        { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", type: "Open · Sunday Night God Meeting", language: "English" }
+        { time: "7:00 AM &ndash; 9:00 AM", name: "Want More, Do More Group", fellowship: "AA", type: "Open · Discussion", language: "English" },
+        { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Sunday Night God Meeting", language: "English" }
     ],
     Monday: [
-      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", type: "Open · Discussion", language: "English" }
+      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Discussion", language: "English" }
     ],
     Tuesday: [
-      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", type: "Open · Discussion", language: "English"  }
+      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Discussion", language: "English"  }
     ],
     Wednesday: [
-      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", type: "Open · Discussion", language: "English"  }
+      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Discussion", language: "English"  }
     ],
     Thursday: [
-      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", type: "Open · 12 and 12 Book Study", language: "English"  }
+      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · 12 and 12 Book Study", language: "English"  }
     ],
     Friday: [
-      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", type: "Open · Big Book Study", language: "English"  }
+      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Big Book Study", language: "English"  }
     ],
     Saturday: [
-      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", type: "Open · Discussion", language: "English" }
+      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Discussion", language: "English" }
     ]
   }
 };

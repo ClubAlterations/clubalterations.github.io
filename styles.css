@@ -60,6 +60,10 @@ h4 { font-size: 1.12rem; margin-bottom: 4px; }
 .section { padding: 84px 0; }
 .section.alt { background: var(--white); border-block: 1px solid rgba(0,0,0,.05); }
 .section-heading { display: flex; justify-content: space-between; gap: 40px; align-items: end; margin-bottom: 32px; }
+.about-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 56px; align-items: start; }
+.about-copy { max-width: 680px; }
+.about-copy p { color: var(--muted); font-size: 1.08rem; }
+.about-copy p:last-child { margin-bottom: 0; }
 .section-heading > p { max-width: 520px; color: var(--muted); }
 .day-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
 .day-tabs button { border: 1px solid var(--line); background: var(--white); border-radius: 999px; padding: 10px 15px; cursor: pointer; font: inherit; font-weight: 700; }
@@ -104,7 +108,7 @@ footer span, .fine-print { color: #bbc7c1; }
 @media (max-width: 820px) {
   nav { display: none; }
   .hero { padding-top: 54px; }
-  .hero-grid, .directions-grid, .contact-grid { grid-template-columns: 1fr; }
+  .hero-grid, .directions-grid, .contact-grid, .about-grid { grid-template-columns: 1fr; }
   .building-placeholder { height: 260px; }
   .quick-grid { grid-template-columns: 1fr; }
   .quick-grid > div { border-right: 0; border-bottom: 1px solid #d3ccbe; padding-left: 0; }
@@ -135,4 +139,18 @@ footer span, .fine-print { color: #bbc7c1; }
   flex-wrap: wrap;
   gap: 0.5rem 1rem;
   margin-top: 0.75rem;
+}
+
+/* Keep semantic schedule headings available to crawlers and assistive tech
+   without changing the visual layout. */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  margin: -1px !important;
+  overflow: hidden !important;
+  clip: rect(0, 0, 0, 0) !important;
+  white-space: nowrap !important;
+  border: 0 !important;
 }

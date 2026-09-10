@@ -1,6 +1,6 @@
 # Club Alterations — Website
 
-A lightweight static website for Club Alterations, an independent clubhouse in Pasadena, Texas that provides meeting space for independent Alcoholics Anonymous groups and other recovery groups. The site is intentionally written to distinguish the clubhouse from A.A. as an organization and to protect member anonymity.
+A lightweight static website for Club Alterations, a Texas nonprofit recovery clubhouse in Pasadena, Texas that provides meeting space for independent recovery groups from a variety of fellowships. The site is intentionally written to distinguish the clubhouse from A.A. as an organization and to protect member anonymity.
 
 ## Site goals
 
@@ -89,3 +89,28 @@ If the canonical domain ever changes, update every SEO URL and resubmit the site
 ### Anonymity
 
 Meeting chair/member names are intentionally not stored or rendered by this site. Keep public meeting listings limited to information such as group name, time, meeting format/type, and language.
+
+
+## Meeting fellowships / programs
+
+Meeting entries can identify the recovery fellowship with a short code, for example:
+
+```js
+{ time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Discussion", language: "English" }
+```
+
+The code is expanded from `SITE_DATA.fellowships`, so `AA` renders as `Alcoholics Anonymous (AA)`. Add new fellowship names to that registry once, then reuse the code in meeting entries. If `fellowship` is omitted, no fellowship label is shown; this avoids guessing when a group's program has not been confirmed.
+
+
+## Organization status wording
+
+The public About section draws its organizational-status text from `site-data.js`:
+
+```js
+organization: {
+  nonprofitStatus: "Club Alterations is a Texas nonprofit corporation. An application for recognition of federal tax-exempt status has been submitted to the IRS and is currently pending.",
+  meetingWelcome: "We welcome independent recovery groups from a variety of fellowships and are actively expanding the meeting schedule."
+}
+```
+
+When IRS recognition is determined, update `organization.nonprofitStatus` so the site does not continue to describe the application as pending. The site deliberately does not claim federal tax-exempt status while the application is pending.

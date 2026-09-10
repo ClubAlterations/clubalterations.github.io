@@ -64,17 +64,57 @@ const schedule = document.querySelector("#schedule");
 const todayList = document.querySelector("#today-meetings");
 const todayTitle = document.querySelector("#today-title");
 
+function fellowshipName(meeting) {
+  if (!meeting.fellowship) return "";
+  return data.fellowships?.[meeting.fellowship] || meeting.fellowship;
+}
+
+function fellowshipLabel(meeting) {
+  const name = fellowshipName(meeting);
+  if (!name) return "";
+  return meeting.fellowship && name !== meeting.fellowship
+    ? `${name} (${meeting.fellowship})`
+    : name;
+}
+
 function meetingMarkup(meeting) {
+  const fellowship = fellowshipLabel(meeting);
   return `
     <article class="schedule-card">
       <p class="eyebrow">${meeting.time}</p>
       <h3>${meeting.name}</h3>
-      <div class="meta"><span class="tag">${meeting.language}</span>${meeting.type.split(" · ").map(item => `<span class="tag">${item}</span>`).join("")}</div>
+      <div class="meta">${fellowship ? `<span class="tag">${fellowship}</span>` : ""}<span class="tag">${meeting.language}</span>${meeting.type.split(" · ").map(item => `<span class="tag">${item}</span>`).join("")}</div>
     </article>`;
 }
 
+function dayId(day) {
+  return day.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+}
+
+function renderFullSchedule() {
+  schedule.innerHTML = days.map(day => {
+    const id = dayId(day);
+    return `
+      <section
+        class="schedule-day"
+        id="schedule-${id}"
+        data-schedule-day="${day}"
+        role="tabpanel"
+        aria-labelledby="tab-${id}"
+      >
+        <h3 class="visually-hidden">${day} recovery meetings in Pasadena, Texas</h3>
+        <div class="schedule-grid">
+          ${meetings[day].map(meetingMarkup).join("")}
+        </div>
+      </section>`;
+  }).join("");
+}
+
 function renderDay(day) {
-  schedule.innerHTML = meetings[day].map(meetingMarkup).join("");
+  schedule.querySelectorAll(".schedule-day").forEach(section => {
+    section.hidden = section.dataset.scheduleDay !== day;
+  });
+
   [...tabs.querySelectorAll("button")].forEach(button => {
     const active = button.dataset.day === day;
     button.setAttribute("aria-selected", String(active));
@@ -83,10 +123,13 @@ function renderDay(day) {
 }
 
 days.forEach(day => {
+  const id = dayId(day);
   const button = document.createElement("button");
   button.type = "button";
+  button.id = `tab-${id}`;
   button.dataset.day = day;
   button.role = "tab";
+  button.setAttribute("aria-controls", `schedule-${id}`);
   button.textContent = day;
   button.addEventListener("click", () => renderDay(day));
   tabs.appendChild(button);
@@ -95,11 +138,16 @@ days.forEach(day => {
 const currentDay = new Intl.DateTimeFormat("en-US", { weekday: "long" }).format(new Date());
 const initialDay = meetings[currentDay] ? currentDay : "Sunday";
 todayTitle.textContent = `${initialDay} meetings`;
-todayList.innerHTML = meetings[initialDay].map(m => `
+todayList.innerHTML = meetings[initialDay].map(m => {
+  const fellowship = fellowshipLabel(m);
+  const details = [fellowship, m.language, m.type].filter(Boolean).join(" · ");
+  return `
   <div class="meeting-row">
     <strong class="meeting-time">${m.time}</strong>
-    <div><strong>${m.name}</strong><br><span>${m.language} · ${m.type}</span></div>
-  </div>`).join("");
+    <div><strong>${m.name}</strong><br><span>${details}</span></div>
+  </div>`;
+}).join("");
+renderFullSchedule();
 renderDay(initialDay);
 
 
