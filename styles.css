@@ -27,6 +27,25 @@ a { color: inherit; }
 nav { display: flex; gap: 22px; font-size: .96rem; }
 nav a { text-decoration: none; }
 nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
+
+/* Storefront sign masthead */
+.sign-masthead {
+  padding: 26px 0 0;
+  background: linear-gradient(180deg, rgba(16,31,54,.05), transparent);
+}
+.sign-masthead-frame {
+  margin: 0;
+  overflow: hidden;
+  border-radius: 18px;
+  box-shadow: 0 16px 38px rgba(17, 24, 39, .14);
+  background: #162238;
+}
+.sign-masthead-frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
 .hero { padding: 82px 0 68px; }
 .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 54px; align-items: center; }
 h1, h2, h3, h4, p { margin-top: 0; }
