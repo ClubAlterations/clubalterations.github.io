@@ -68,7 +68,11 @@ window.SITE_DATA = {
         date: "2026-09-19",
         title: "Still Sober Group &mdash; Speak and Eat and Bingo",
         time: "4:00 PM &ndash; 8:00 PM",
-        description: "Two Chili Dogs with all the fixings and sides for $10. Plus a 50:50 raffle and Bingo!"
+        description: "Two Chili Dogs with all the fixings and sides for $10. Plus a 50:50 raffle and Bingo!",
+        flyer: {
+          src: "assets/flyers/StillSober-SpeakAndEat-20260919.jpg",
+          alt: "Flyer for Still Sober Group Speak, Eat and Bingo Night at Club Alterations on September 19, 2026"
+        }
       },
       {
         recurrence: { frequency: "monthly", ordinal: "last", weekday: "Wednesday" },

@@ -207,6 +207,23 @@ function eventMarkup(event, muted = false) {
     String(date.getDate()).padStart(2, "0")
   ].join("-");
 
+  const flyerActions = event.flyer?.src ? `
+        <div class="event-flyer">
+          <button
+            class="flyer-thumbnail"
+            type="button"
+            data-flyer-preview="${event.flyer.src}"
+            data-flyer-alt="${event.flyer.alt || `Flyer for ${event.title}`}"
+            aria-label="Preview flyer for ${event.title}"
+          >
+            <img
+              src="${event.flyer.src}"
+              alt="${event.flyer.alt || `Flyer for ${event.title}`}"
+              loading="lazy"
+            >
+          </button>
+        </div>` : "";
+
   return `
     <article class="event-card${muted ? " muted-card" : ""}">
       <time datetime="${isoDate}"><span>${month}</span><strong>${day}</strong></time>
@@ -214,6 +231,7 @@ function eventMarkup(event, muted = false) {
         <h4>${event.title}</h4>
         <p>${weekday}${event.time ? ` · ${event.time}` : ""}</p>
         <p>${event.description}</p>
+        ${flyerActions}
       </div>
     </article>`;
 }
@@ -235,4 +253,36 @@ if (communityEvents) {
     .sort((a, b) => nextEventDate(a) - nextEventDate(b))
     .map(event => eventMarkup(event, true))
     .join("");
+}
+
+
+const flyerDialog = document.querySelector("#flyer-dialog");
+const flyerDialogImage = document.querySelector("#flyer-dialog-image");
+const flyerDialogLink = document.querySelector("#flyer-dialog-link");
+const flyerDialogClose = document.querySelector("#flyer-dialog-close");
+
+if (flyerDialog && flyerDialogImage && flyerDialogLink) {
+  document.addEventListener("click", event => {
+    const previewButton = event.target.closest("[data-flyer-preview]");
+    if (!previewButton) return;
+
+    const src = previewButton.dataset.flyerPreview;
+    const alt = previewButton.dataset.flyerAlt || "Event flyer";
+    flyerDialogImage.src = src;
+    flyerDialogImage.alt = alt;
+    flyerDialogLink.href = src;
+    flyerDialog.showModal();
+  });
+
+  flyerDialogClose?.addEventListener("click", () => flyerDialog.close());
+
+  flyerDialog.addEventListener("click", event => {
+    if (event.target === flyerDialog) flyerDialog.close();
+  });
+
+  flyerDialog.addEventListener("close", () => {
+    flyerDialogImage.removeAttribute("src");
+    flyerDialogImage.alt = "";
+    flyerDialogLink.removeAttribute("href");
+  });
 }

@@ -114,3 +114,17 @@ organization: {
 ```
 
 When IRS recognition is determined, update `organization.nonprofitStatus` so the site does not continue to describe the application as pending. The site deliberately does not claim federal tax-exempt status while the application is pending.
+
+
+## Event flyers
+
+Events can optionally include a flyer in `site-data.js`. Put flyer images in `assets/flyers/` and add a `flyer` object to the event:
+
+```js
+flyer: {
+  src: "assets/flyers/example-event.jpg",
+  alt: "Descriptive alt text for the event flyer"
+}
+```
+
+When a flyer is present, the event card automatically shows a thumbnail preview. Clicking or keyboard-activating the thumbnail opens the flyer in an accessible on-page lightbox without leaving the site. Events without a `flyer` object render normally with no flyer controls.
