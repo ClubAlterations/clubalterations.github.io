@@ -64,16 +64,16 @@ const schedule = document.querySelector("#schedule");
 const todayList = document.querySelector("#today-meetings");
 const todayTitle = document.querySelector("#today-title");
 
-function fellowshipName(meeting) {
-  if (!meeting.fellowship) return "";
-  return data.fellowships?.[meeting.fellowship] || meeting.fellowship;
+function fellowshipName(item) {
+  if (!item.fellowship) return "";
+  return data.fellowships?.[item.fellowship] || item.fellowship;
 }
 
-function fellowshipLabel(meeting) {
-  const name = fellowshipName(meeting);
+function fellowshipLabel(item) {
+  const name = fellowshipName(item);
   if (!name) return "";
-  return meeting.fellowship && name !== meeting.fellowship
-    ? `${name} (${meeting.fellowship})`
+  return item.fellowship && name !== item.fellowship
+    ? `${name} (${item.fellowship})`
     : name;
 }
 
@@ -207,6 +207,12 @@ function eventMarkup(event, muted = false) {
     String(date.getDate()).padStart(2, "0")
   ].join("-");
 
+  const fellowship = fellowshipLabel(event);
+  const eventMeta = [
+    event.host ? `<span class="tag">${event.host}</span>` : "",
+    fellowship ? `<span class="tag">${fellowship}</span>` : ""
+  ].filter(Boolean).join("");
+
   const flyerActions = event.flyer?.src ? `
         <div class="event-flyer">
           <button
@@ -229,6 +235,7 @@ function eventMarkup(event, muted = false) {
       <time datetime="${isoDate}"><span>${month}</span><strong>${day}</strong></time>
       <div>
         <h4>${event.title}</h4>
+        ${eventMeta ? `<div class="meta event-meta">${eventMeta}</div>` : ""}
         <p>${weekday}${event.time ? ` · ${event.time}` : ""}</p>
         <p>${event.description}</p>
         ${flyerActions}

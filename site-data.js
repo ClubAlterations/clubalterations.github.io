@@ -66,7 +66,9 @@ window.SITE_DATA = {
     club: [
       {
         date: "2026-09-19",
-        title: "Still Sober Group &mdash; Speak and Eat and Bingo",
+        title: "Speak and Eat and Bingo",
+        host: "Still Sober Group",
+        fellowship: "AA",
         time: "4:00 PM &ndash; 8:00 PM",
         description: "Two Chili Dogs with all the fixings and sides for $10. Plus a 50:50 raffle and Bingo!",
         flyer: {
@@ -76,13 +78,17 @@ window.SITE_DATA = {
       },
       {
         recurrence: { frequency: "monthly", ordinal: "last", weekday: "Wednesday" },
-        title: "Still Sober Group &mdash; Birthday Night",
+        title: "Birthday Night",
+        host: "Still Sober Group",
+        fellowship: "AA",
         time: "7:00 PM &ndash; 8:00 PM",
         description: "Monthly celebration for sobriety anniversaries."
       },
       {
         recurrence: { frequency: "monthly", ordinal: "last", weekday: "Monday" },
-        title: "Still Sober Group &mdash; Group Conscience Meeting",
+        title: "Group Conscience Meeting",
+        host: "Still Sober Group",
+        fellowship: "AA",
         time: "8:00 PM &ndash; 9:00 PM",
         description: "Monthly group conscience meeting."
       }

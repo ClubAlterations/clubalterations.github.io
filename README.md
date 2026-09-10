@@ -116,6 +116,22 @@ organization: {
 When IRS recognition is determined, update `organization.nonprofitStatus` so the site does not continue to describe the application as pending. The site deliberately does not claim federal tax-exempt status while the application is pending.
 
 
+## Event hosts and fellowships
+
+Events can optionally identify both the group hosting the event and its recovery fellowship:
+
+```js
+{
+  title: "Speak and Eat and Bingo",
+  host: "Still Sober Group",
+  fellowship: "AA",
+  time: "4:00 PM &ndash; 8:00 PM"
+}
+```
+
+`host` and `fellowship` are intentionally separate. The fellowship code uses the same `SITE_DATA.fellowships` registry as meetings, so `AA` renders as `Alcoholics Anonymous (AA)`. Either field may be omitted for clubhouse-wide or community events where it does not apply.
+
+
 ## Event flyers
 
 Events can optionally include a flyer in `site-data.js`. Put flyer images in `assets/flyers/` and add a `flyer` object to the event:
