@@ -51,6 +51,7 @@ function applySiteData() {
 
 applySiteData();
 
+
 const nearbyMeetingLinks = document.querySelector("#nearby-meeting-links");
 if (nearbyMeetingLinks && Array.isArray(data.resources?.otherMeetings)) {
   nearbyMeetingLinks.innerHTML = data.resources.otherMeetings
@@ -291,5 +292,15 @@ if (flyerDialog && flyerDialogImage && flyerDialogLink) {
     flyerDialogImage.removeAttribute("src");
     flyerDialogImage.alt = "";
     flyerDialogLink.removeAttribute("href");
+  });
+}
+
+// Close the native mobile navigation after a menu item is selected.
+const mobileNav = document.querySelector('.mobile-nav');
+if (mobileNav) {
+  mobileNav.querySelectorAll('a[href]').forEach(link => {
+    link.addEventListener('click', () => {
+      mobileNav.removeAttribute('open');
+    });
   });
 }

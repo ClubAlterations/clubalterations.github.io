@@ -38,6 +38,10 @@ nav { display: flex; gap: 22px; font-size: .96rem; }
 nav a { text-decoration: none; }
 nav a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
+.mobile-nav { display: none; }
+.mobile-nav summary { list-style: none; }
+.mobile-nav summary::-webkit-details-marker { display: none; }
+
 /* Storefront sign masthead */
 .sign-masthead {
   padding: 26px 0 0;
@@ -135,21 +139,67 @@ footer span, .fine-print { color: #bbc7c1; }
 
 @media (max-width: 820px) {
   .header-inner {
-    flex-wrap: wrap;
-    gap: 8px 16px;
-    padding: 8px 0 10px;
+    position: relative;
+    min-height: 64px;
+    gap: 12px;
+    padding: 8px 0;
   }
-  nav {
+  .brand { min-width: 0; }
+  .brand > span:last-child { min-width: 0; }
+  .brand strong { white-space: nowrap; }
+  .desktop-nav { display: none; }
+  .mobile-nav {
+    display: block;
+    margin-left: auto;
+    position: relative;
+    flex: 0 0 auto;
+  }
+  .mobile-nav summary {
     display: flex;
-    width: 100%;
-    gap: 18px;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 2px 0 4px;
-    scrollbar-width: none;
-    -webkit-overflow-scrolling: touch;
+    align-items: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 8px 11px;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: var(--white);
+    color: var(--ink);
+    cursor: pointer;
+    font-weight: 750;
+    user-select: none;
   }
-  nav::-webkit-scrollbar { display: none; }
+  .mobile-nav summary:focus-visible {
+    outline: 3px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    outline-offset: 2px;
+  }
+  .menu-icon { width: 20px; display: grid; gap: 4px; }
+  .menu-icon span { display: block; height: 2px; border-radius: 99px; background: currentColor; }
+  .mobile-nav nav {
+    position: fixed;
+    top: 64px;
+    left: 12px;
+    right: 12px;
+    z-index: 50;
+    display: flex;
+    padding: 10px;
+    gap: 2px;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    background: var(--white);
+    box-shadow: var(--shadow);
+  }
+  .mobile-nav:not([open]) nav { display: none; }
+  .mobile-nav nav a {
+    display: block;
+    padding: 12px 13px;
+    border-radius: 9px;
+    font-weight: 700;
+  }
+  .mobile-nav nav a:hover, .mobile-nav nav a:focus-visible {
+    background: var(--accent-2);
+    text-decoration: none;
+  }
   .hero { padding-top: 54px; }
   .hero-grid, .directions-grid, .contact-grid, .about-grid { grid-template-columns: 1fr; }
   .building-placeholder { height: 260px; }
