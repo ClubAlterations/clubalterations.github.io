@@ -53,7 +53,7 @@ address: {
 }
 ```
 
-Changing those four values automatically updates every displayed club address as well as the Google Maps and Apple Maps links.
+Changing those four values automatically updates every displayed club address as well as the Google Maps and Apple Maps links. Both map links search for the club name together with the full street address so they are more likely to resolve to the named Club Alterations place rather than an anonymous address pin.
 
 The same applies to the email address, social media links, entrance information, parking information, accessibility note, club name/tagline, and meeting schedule.
 

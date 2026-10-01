@@ -30,12 +30,13 @@ function applySiteData() {
   });
 
   const encodedAddress = encodeURIComponent(addressValues().full);
+  const encodedPlace = encodeURIComponent(`${data.club.name}, ${addressValues().full}`);
   const links = {
     email: `mailto:${data.contact.email}`,
     website: data.contact.websiteUrl,
     facebook: data.social?.facebook,
-    googleMaps: `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`,
-    appleMaps: `https://maps.apple.com/?q=${encodedAddress}`
+    googleMaps: `https://www.google.com/maps/search/?api=1&query=${encodedPlace}`,
+    appleMaps: `https://maps.apple.com/?q=${encodedPlace}`
   };
 
   document.querySelectorAll("[data-site-link]").forEach(element => {

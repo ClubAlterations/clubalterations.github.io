@@ -41,7 +41,7 @@ window.SITE_DATA = {
     parkingTitle: "We ask that you please not park in front of the other businesses when they're open. Car pool when possible.",
     parkingNote: "",
     parkingDetail: "Please avoid parking in front of the other businesses when they're open.",
-    accessibility: "Ramp on the otherside of the church nextdoor."
+    accessibility: "Ramp on the other side of the church next door."
   },
 
 
@@ -63,17 +63,29 @@ window.SITE_DATA = {
   },
 
   events: {
-    club: [
+      club: [
+	  {
+        date: "2026-10-04",
+        title: "Football Potluck",
+        host: "Still Sober Group",
+        fellowship: "AA",
+        time: "12:00 PM",
+        description: "Bring your favorite potluck dish and enjoy the game with us!",
+        flyer: {
+          src: "assets/flyers/StillSober-FootballPotluck-20261004.png",
+          alt: "Flyer for Still Sober Group Football Potluck at Club Alterations on October 4, 2026"
+        }
+      },
       {
-        date: "2026-09-19",
+        date: "2026-10-24",
         title: "Speak and Eat and Bingo",
         host: "Still Sober Group",
         fellowship: "AA",
         time: "4:00 PM &ndash; 8:00 PM",
-        description: "Two Chili Dogs with all the fixings and sides for $10. Plus a 50:50 raffle and Bingo!",
+          description: "Hamburgers with all the fixings and pasta salad for $10.",
         flyer: {
-          src: "assets/flyers/StillSober-SpeakAndEat-20260919.jpg",
-          alt: "Flyer for Still Sober Group Speak, Eat and Bingo Night at Club Alterations on September 19, 2026"
+          src: "assets/flyers/StillSober-SpeakAndEat-20261024.jpg",
+          alt: "Flyer for Still Sober Group Speak and Eat Night at Club Alterations on October 24, 2026"
         }
       },
       {
@@ -95,6 +107,12 @@ window.SITE_DATA = {
     ],
     community: [
       {
+        recurrence: { frequency: "monthly", ordinal: "second", weekday: "Wednesday" },
+        title: "GSR Meeting",
+        time: "7:00 PM",
+        description: "Monthly General Service Representative meeting."
+      },
+      {
         date: "2026-08-29",
         title: "District Workshop",
         time: "Hosted off-site",
@@ -106,7 +124,7 @@ window.SITE_DATA = {
         time: "Hosted off-site",
         description: "Dinner, speaker, and anniversary celebration."
       }
-    ]
+    ]  
   },
 
   meetings: {
