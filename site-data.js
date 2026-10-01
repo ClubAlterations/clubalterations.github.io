@@ -72,7 +72,7 @@ window.SITE_DATA = {
         time: "12:00 PM",
         description: "Bring your favorite potluck dish and enjoy the game with us!",
         flyer: {
-          src: "assets/flyers/StillSober-FootballPotluck-20261004.png",
+          src: "assets/flyers/StillSober-FootballPotluck-20261004.jpg",
           alt: "Flyer for Still Sober Group Football Potluck at Club Alterations on October 4, 2026"
         }
       },
