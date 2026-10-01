@@ -109,21 +109,11 @@ window.SITE_DATA = {
       {
         recurrence: { frequency: "monthly", ordinal: "second", weekday: "Wednesday" },
         title: "GSR Meeting",
+        fellowship: "AA",
         time: "7:00 PM",
+        location: "Kelley's Country Cookin', 7011 Spencer Hwy, Pasadena, TX 77505",
         description: "Monthly General Service Representative meeting."
       },
-      {
-        date: "2026-08-29",
-        title: "District Workshop",
-        time: "Hosted off-site",
-        description: "Service workshop and fellowship. See organizer details before attending."
-      },
-      {
-        date: "2026-09-12",
-        title: "Local Club Anniversary",
-        time: "Hosted off-site",
-        description: "Dinner, speaker, and anniversary celebration."
-      }
     ]  
   },
 

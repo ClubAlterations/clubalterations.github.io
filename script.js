@@ -267,6 +267,7 @@ function eventMarkup(event, muted = false) {
         <h4>${event.title}</h4>
         ${eventMeta ? `<div class="meta event-meta">${eventMeta}</div>` : ""}
         <p>${weekday}${event.time ? ` · ${event.time}` : ""}</p>
+        ${event.location ? `<p class="event-location"><strong>Location:</strong> ${event.location}</p>` : ""}
         <p>${event.description}</p>
         ${flyerActions}
       </div>
