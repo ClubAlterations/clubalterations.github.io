@@ -28,10 +28,7 @@ a { color: inherit; }
   height: 46px;
   flex: 0 0 46px;
 }
-.brand-emblem { display: block; width: 46px; height: 46px; overflow: visible; }
-.brand-emblem-ring-outer { fill: var(--accent); stroke: var(--accent); stroke-width: 2; }
-.brand-emblem-ring-inner { fill: var(--paper); stroke: var(--paper); stroke-width: 2; }
-.brand-emblem-triangle { fill: none; stroke: var(--accent); stroke-width: 3.5; stroke-linejoin: miter; }
+.brand-emblem { display: block; width: 46px; height: 46px; object-fit: contain; }
 .brand strong, .brand small { display: block; }
 .brand small { color: var(--muted); }
 nav { display: flex; gap: 22px; font-size: .96rem; }
