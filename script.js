@@ -154,15 +154,36 @@ renderDay(initialDay);
 
 const WEEKDAYS = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-function lastWeekdayOfMonth(year, month, weekdayName) {
+const ORDINALS = {
+  first: 1,
+  second: 2,
+  third: 3,
+  fourth: 4,
+  fifth: 5
+};
+
+function nthWeekdayOfMonth(year, month, weekdayName, ordinal) {
   const weekday = WEEKDAYS.indexOf(weekdayName);
   if (weekday === -1) throw new Error(`Unknown weekday: ${weekdayName}`);
 
-  const date = new Date(year, month + 1, 0);
-  while (date.getDay() !== weekday) {
-    date.setDate(date.getDate() - 1);
+  if (ordinal === "last") {
+    const date = new Date(year, month + 1, 0);
+    while (date.getDay() !== weekday) {
+      date.setDate(date.getDate() - 1);
+    }
+    return date;
   }
-  return date;
+
+  const occurrence = ORDINALS[ordinal];
+  if (!occurrence) throw new Error(`Unknown ordinal: ${ordinal}`);
+
+  const date = new Date(year, month, 1);
+  while (date.getDay() !== weekday) {
+    date.setDate(date.getDate() + 1);
+  }
+
+  date.setDate(date.getDate() + 7 * (occurrence - 1));
+  return date.getMonth() === month ? date : null;
 }
 
 function nextEventDate(event, fromDate = new Date()) {
@@ -173,23 +194,31 @@ function nextEventDate(event, fromDate = new Date()) {
   const recurrence = event.recurrence;
   if (
     recurrence?.frequency === "monthly" &&
-    recurrence.ordinal === "last" &&
+    recurrence.ordinal &&
     recurrence.weekday
   ) {
     let year = fromDate.getFullYear();
     let month = fromDate.getMonth();
-    let candidate = lastWeekdayOfMonth(year, month, recurrence.weekday);
-
     const today = new Date(fromDate.getFullYear(), fromDate.getMonth(), fromDate.getDate());
-    if (candidate < today) {
+
+    // Search ahead far enough to handle recurrences such as a fifth weekday,
+    // which does not occur in every month.
+    for (let i = 0; i < 24; i += 1) {
+      const candidate = nthWeekdayOfMonth(
+        year,
+        month,
+        recurrence.weekday,
+        recurrence.ordinal
+      );
+
+      if (candidate && candidate >= today) return candidate;
+
       month += 1;
       if (month > 11) {
         month = 0;
         year += 1;
       }
-      candidate = lastWeekdayOfMonth(year, month, recurrence.weekday);
     }
-    return candidate;
   }
 
   return null;
