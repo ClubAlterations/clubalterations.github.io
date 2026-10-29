@@ -111,7 +111,7 @@ window.SITE_DATA = {
         { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Sunday Night God Meeting", language: "English" }
     ],
     Monday: [
-      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Discussion", language: "English" }
+      { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Newcomer's Meeting", language: "English" }
     ],
     Tuesday: [
       { time: "7:00 PM &ndash; 8:00 PM", name: "Still Sober Group", fellowship: "AA", type: "Open · Discussion", language: "English"  }
