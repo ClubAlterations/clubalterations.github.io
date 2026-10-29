@@ -77,15 +77,15 @@ window.SITE_DATA = {
         }
       },
       {
-        date: "2026-10-24",
-        title: "Speak and Eat and Bingo",
+        date: "2026-11-26",
+        title: "Still Sober and Club Alterations Thanksgiving",
         host: "Still Sober Group",
         fellowship: "AA",
-        time: "4:00 PM &ndash; 8:00 PM",
-          description: "Hamburgers with all the fixings and pasta salad for $10.",
+        time: "3:00 PM &ndash; 8:00 PM",
+          description: "Thanksgiving Potluck - Bring your favorite dish",
         flyer: {
-          src: "assets/flyers/StillSober-SpeakAndEat-20261024.jpg",
-          alt: "Flyer for Still Sober Group Speak and Eat Night at Club Alterations on October 24, 2026"
+          src: "assets/flyers/StillSober-Thanksgiving-20261126.jpg",
+          alt: "Still Sober Group Thanksgiving Potluck flyer at Club Alterations on November 26, 2026"
         }
       },
       {
