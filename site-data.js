@@ -64,18 +64,6 @@ window.SITE_DATA = {
 
   events: {
       club: [
-	  {
-        date: "2026-10-04",
-        title: "Football Potluck",
-        host: "Still Sober Group",
-        fellowship: "AA",
-        time: "12:00 PM",
-        description: "Bring your favorite potluck dish and enjoy the game with us!",
-        flyer: {
-          src: "assets/flyers/StillSober-FootballPotluck-20261004.jpg",
-          alt: "Flyer for Still Sober Group Football Potluck at Club Alterations on October 4, 2026"
-        }
-      },
       {
         date: "2026-11-26",
         title: "Still Sober and Club Alterations Thanksgiving",
