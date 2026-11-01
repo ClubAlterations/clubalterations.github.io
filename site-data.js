@@ -96,11 +96,11 @@ window.SITE_DATA = {
     community: [
       {
         recurrence: { frequency: "monthly", ordinal: "second", weekday: "Wednesday" },
-        title: "GSR Meeting",
+        title: "District 70 Committee Meeting",
         fellowship: "AA",
         time: "7:00 PM",
         location: "Kelley's Country Cookin', 7011 Spencer Hwy, Pasadena, TX 77505",
-        description: "Monthly General Service Representative meeting."
+          description: "If you’re an AA member in District 70 who’s interested in general service, this is your chance to get involved."
       },
     ]  
   },
