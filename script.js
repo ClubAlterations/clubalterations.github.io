@@ -224,6 +224,167 @@ function nextEventDate(event, fromDate = new Date()) {
   return null;
 }
 
+const CALENDAR_TIME_ZONE = "America/Chicago";
+const calendarEventData = new Map();
+let calendarEventSequence = 0;
+
+function escapeHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, character => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  })[character]);
+}
+
+function parseCalendarClock(value) {
+  const match = String(value || "").trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)$/i);
+  if (!match) return null;
+
+  let hour = Number(match[1]) % 12;
+  if (match[3].toUpperCase() === "PM") hour += 12;
+  return { hour, minute: Number(match[2]) };
+}
+
+function calendarTimeRange(event, date) {
+  const parts = String(event.time || "")
+    .replace(/&ndash;/gi, "–")
+    .split(/\s*–\s*/);
+  const start = parseCalendarClock(parts[0]);
+  if (!start) return null;
+
+  const hasExplicitEnd = Boolean(parts[1]);
+  let end = hasExplicitEnd ? parseCalendarClock(parts[1]) : null;
+  if (!end) {
+    end = { hour: start.hour + 1, minute: start.minute };
+    if (end.hour >= 24) end.hour -= 24;
+  }
+
+  const startDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), start.hour, start.minute);
+  const endDate = new Date(date.getFullYear(), date.getMonth(), date.getDate(), end.hour, end.minute);
+  if (endDate <= startDate) endDate.setDate(endDate.getDate() + 1);
+
+  return { startDate, endDate, hasExplicitEnd };
+}
+
+function formatCalendarDateTime(date) {
+  return [
+    date.getFullYear(),
+    String(date.getMonth() + 1).padStart(2, "0"),
+    String(date.getDate()).padStart(2, "0")
+  ].join("") + "T" + [
+    String(date.getHours()).padStart(2, "0"),
+    String(date.getMinutes()).padStart(2, "0"),
+    "00"
+  ].join("");
+}
+
+function calendarRecurrenceRule(recurrence) {
+  if (recurrence?.frequency !== "monthly") return "";
+
+  const ordinals = { first: "1", second: "2", third: "3", fourth: "4", last: "-1" };
+  const weekdays = {
+    Sunday: "SU", Monday: "MO", Tuesday: "TU", Wednesday: "WE",
+    Thursday: "TH", Friday: "FR", Saturday: "SA"
+  };
+  const ordinal = ordinals[recurrence.ordinal];
+  const weekday = weekdays[recurrence.weekday];
+  return ordinal && weekday ? `FREQ=MONTHLY;BYDAY=${ordinal}${weekday}` : "";
+}
+
+function escapeIcsText(value) {
+  return String(value ?? "")
+    .replace(/\\/g, "\\\\")
+    .replace(/\r\n|\r|\n/g, "\\n")
+    .replace(/;/g, "\\;")
+    .replace(/,/g, "\\,");
+}
+
+function foldIcsLine(line) {
+  let output = "";
+  let lineBytes = 0;
+  const encoder = new TextEncoder();
+
+  for (const character of line) {
+    const characterBytes = encoder.encode(character).length;
+    if (lineBytes + characterBytes > 75) {
+      output += "\r\n ";
+      lineBytes = 1;
+    }
+    output += character;
+    lineBytes += characterBytes;
+  }
+
+  return output;
+}
+
+const calendarTimeZone = [
+  "BEGIN:VTIMEZONE",
+  `TZID:${CALENDAR_TIME_ZONE}`,
+  `X-LIC-LOCATION:${CALENDAR_TIME_ZONE}`,
+  "BEGIN:DAYLIGHT",
+  "TZOFFSETFROM:-0600",
+  "TZOFFSETTO:-0500",
+  "TZNAME:CDT",
+  "DTSTART:20070311T020000",
+  "RRULE:FREQ=YEARLY;BYMONTH=3;BYDAY=2SU",
+  "END:DAYLIGHT",
+  "BEGIN:STANDARD",
+  "TZOFFSETFROM:-0500",
+  "TZOFFSETTO:-0600",
+  "TZNAME:CST",
+  "DTSTART:20071104T020000",
+  "RRULE:FREQ=YEARLY;BYMONTH=11;BYDAY=1SU",
+  "END:STANDARD",
+  "END:VTIMEZONE"
+];
+
+function eventLocation(event) {
+  return event.location || `${data.address.street}, ${data.address.city}, ${data.address.state} ${data.address.postalCode}`;
+}
+
+function eventCalendarDescription(event) {
+  return [
+    event.description,
+    event.host ? `Hosted by ${event.host}` : "",
+    fellowshipLabel(event)
+  ].filter(Boolean).join("\n\n");
+}
+
+function createIcsContent(event, date, timeRange, recurrenceRule) {
+  const titleSlug = event.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "club-event";
+  const instanceDate = formatCalendarDateTime(date).slice(0, 8);
+  const uid = `${titleSlug}${event.recurrence ? "" : `-${instanceDate}`}@clubalterations.org`;
+  const stamp = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}Z$/, "Z");
+  const lines = [
+    "BEGIN:VCALENDAR",
+    "VERSION:2.0",
+    "PRODID:-//Club Alterations//Events//EN",
+    "CALSCALE:GREGORIAN",
+    "METHOD:PUBLISH",
+    ...calendarTimeZone,
+    "BEGIN:VEVENT",
+    `UID:${uid}`,
+    `DTSTAMP:${stamp}`,
+    `DTSTART;TZID=${CALENDAR_TIME_ZONE}:${formatCalendarDateTime(timeRange.startDate)}`,
+    `DTEND;TZID=${CALENDAR_TIME_ZONE}:${formatCalendarDateTime(timeRange.endDate)}`,
+    recurrenceRule ? `RRULE:${recurrenceRule}` : "",
+    `SUMMARY:${escapeIcsText(event.title)}`,
+    `DESCRIPTION:${escapeIcsText(eventCalendarDescription(event))}`,
+    `LOCATION:${escapeIcsText(eventLocation(event))}`,
+    "URL:https://clubalterations.org/",
+    "STATUS:CONFIRMED",
+    "END:VEVENT",
+    "END:VCALENDAR"
+  ].filter(Boolean);
+  return lines.map(foldIcsLine).join("\r\n") + "\r\n";
+}
+
+function formatGoogleCalendarDate(date) {
+  return formatCalendarDateTime(date);
+}
+
 function eventMarkup(event, muted = false) {
   const date = nextEventDate(event);
   if (!date) return "";
@@ -236,6 +397,8 @@ function eventMarkup(event, muted = false) {
     String(date.getMonth() + 1).padStart(2, "0"),
     String(date.getDate()).padStart(2, "0")
   ].join("-");
+  const calendarId = `calendar-event-${++calendarEventSequence}`;
+  calendarEventData.set(calendarId, { event, date });
 
   const fellowship = fellowshipLabel(event);
   const eventMeta = [
@@ -263,7 +426,7 @@ function eventMarkup(event, muted = false) {
   return `
     <article class="event-card${muted ? " muted-card" : ""}">
       <time datetime="${isoDate}"><span>${month}</span><strong>${day}</strong></time>
-      <div>
+      <div class="event-card-content">
         <h4>${event.title}</h4>
         ${eventMeta ? `<div class="meta event-meta">${eventMeta}</div>` : ""}
         <p>${weekday}${event.time ? ` · ${event.time}` : ""}</p>
@@ -271,6 +434,12 @@ function eventMarkup(event, muted = false) {
         <p>${event.description}</p>
         ${flyerActions}
       </div>
+      <button
+        class="event-card-action"
+        type="button"
+        data-calendar-event-id="${calendarId}"
+        aria-label="Add ${escapeHtml(event.title)} to your calendar"
+      ></button>
     </article>`;
 }
 
@@ -293,6 +462,83 @@ if (communityEvents) {
     .join("");
 }
 
+
+const calendarDialog = document.querySelector("#calendar-dialog");
+const calendarDialogTitle = document.querySelector("#calendar-dialog-title");
+const calendarDialogTime = document.querySelector("#calendar-dialog-time");
+const calendarDialogLocation = document.querySelector("#calendar-dialog-location");
+const calendarDialogDescription = document.querySelector("#calendar-dialog-description");
+const calendarDialogNote = document.querySelector("#calendar-dialog-note");
+const calendarDialogGoogle = document.querySelector("#calendar-dialog-google");
+const calendarDialogIcs = document.querySelector("#calendar-dialog-ics");
+const calendarDialogClose = document.querySelector("#calendar-dialog-close");
+let calendarIcsObjectUrl = "";
+
+function openCalendarDialog(calendarId) {
+  const calendarEntry = calendarEventData.get(calendarId);
+  if (!calendarEntry || !calendarDialog) return;
+
+  const { event, date } = calendarEntry;
+  const timeRange = calendarTimeRange(event, date);
+  if (!timeRange) return;
+
+  const recurrenceRule = calendarRecurrenceRule(event.recurrence);
+  const eventDateText = new Intl.DateTimeFormat("en-US", {
+    weekday: "long", month: "long", day: "numeric", year: "numeric"
+  }).format(date);
+  const formatTime = value => new Intl.DateTimeFormat("en-US", {
+    hour: "numeric", minute: "2-digit"
+  }).format(value);
+  const timeText = `${formatTime(timeRange.startDate)} – ${formatTime(timeRange.endDate)}`;
+  const googleUrl = new URL("https://calendar.google.com/calendar/render");
+  googleUrl.searchParams.set("action", "TEMPLATE");
+  googleUrl.searchParams.set("text", event.title);
+  googleUrl.searchParams.set("dates", `${formatGoogleCalendarDate(timeRange.startDate)}/${formatGoogleCalendarDate(timeRange.endDate)}`);
+  googleUrl.searchParams.set("ctz", CALENDAR_TIME_ZONE);
+  googleUrl.searchParams.set("details", eventCalendarDescription(event));
+  googleUrl.searchParams.set("location", eventLocation(event));
+  if (recurrenceRule) googleUrl.searchParams.set("recur", `RRULE:${recurrenceRule}`);
+
+  if (calendarIcsObjectUrl) URL.revokeObjectURL(calendarIcsObjectUrl);
+  calendarIcsObjectUrl = URL.createObjectURL(new Blob(
+    [createIcsContent(event, date, timeRange, recurrenceRule)],
+    { type: "text/calendar;charset=utf-8" }
+  ));
+
+  const filename = event.title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "club-event";
+  calendarDialogTitle.textContent = event.title;
+  calendarDialogTime.textContent = `${eventDateText} · ${timeText}`;
+  calendarDialogLocation.textContent = eventLocation(event);
+  calendarDialogDescription.textContent = event.description || "";
+  calendarDialogGoogle.href = googleUrl.toString();
+  calendarDialogIcs.href = calendarIcsObjectUrl;
+  calendarDialogIcs.download = `${filename}.ics`;
+
+  const notes = [];
+  if (event.recurrence && recurrenceRule) notes.push("This adds the monthly series, starting on the date shown.");
+  if (!timeRange.hasExplicitEnd) notes.push("No end time is listed, so the calendar entry uses a one-hour duration.");
+  calendarDialogNote.textContent = notes.join(" ");
+  calendarDialogNote.hidden = notes.length === 0;
+  calendarDialog.showModal();
+}
+
+if (calendarDialog && calendarDialogGoogle && calendarDialogIcs) {
+  document.addEventListener("click", event => {
+    const calendarButton = event.target.closest("[data-calendar-event-id]");
+    if (calendarButton) openCalendarDialog(calendarButton.dataset.calendarEventId);
+  });
+
+  calendarDialogClose?.addEventListener("click", () => calendarDialog.close());
+  calendarDialog.addEventListener("click", event => {
+    if (event.target === calendarDialog) calendarDialog.close();
+  });
+  calendarDialog.addEventListener("close", () => {
+    if (calendarIcsObjectUrl) URL.revokeObjectURL(calendarIcsObjectUrl);
+    calendarIcsObjectUrl = "";
+    calendarDialogGoogle.removeAttribute("href");
+    calendarDialogIcs.removeAttribute("href");
+  });
+}
 
 const flyerDialog = document.querySelector("#flyer-dialog");
 const flyerDialogImage = document.querySelector("#flyer-dialog-image");

@@ -285,6 +285,23 @@
     </div>
   </dialog>
 
+  <dialog class="calendar-dialog" id="calendar-dialog" aria-labelledby="calendar-dialog-title">
+    <div class="flyer-dialog-header">
+      <h2 id="calendar-dialog-title">Add event to your calendar</h2>
+      <button class="flyer-dialog-close" id="calendar-dialog-close" type="button" aria-label="Close calendar options">&times;</button>
+    </div>
+    <div class="calendar-dialog-body">
+      <p class="eyebrow" id="calendar-dialog-time"></p>
+      <p><strong>Location</strong><br><span id="calendar-dialog-location"></span></p>
+      <p id="calendar-dialog-description"></p>
+      <p class="calendar-dialog-note" id="calendar-dialog-note" hidden></p>
+      <div class="calendar-dialog-actions">
+        <a class="button primary" id="calendar-dialog-google" href="#" target="_blank" rel="noopener noreferrer">Add to Google Calendar</a>
+        <a class="button secondary" id="calendar-dialog-ics" href="#" download>Download for Apple, Outlook, or another calendar</a>
+      </div>
+    </div>
+  </dialog>
+
   <script src="site-data.js"></script>
   <script src="script.js"></script>
 </body>
