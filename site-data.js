@@ -13,7 +13,7 @@ window.SITE_DATA = {
   },
 
   organization: {
-    nonprofitStatus: "Club Alterations is a Texas nonprofit corporation. An application for recognition of federal tax-exempt status has been submitted to the IRS and is currently pending.",
+    nonprofitStatus: "Club Alterations is a Texas nonprofit corporation recognized by the IRS as a tax-exempt 501(c)(3) public charity.",
     meetingWelcome: "We welcome independent recovery groups from a variety of fellowships and are actively expanding the meeting schedule."
   },
 
