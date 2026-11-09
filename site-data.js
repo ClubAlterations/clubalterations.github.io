@@ -14,7 +14,9 @@ window.SITE_DATA = {
 
   organization: {
     nonprofitStatus: "Club Alterations is a Texas nonprofit corporation recognized by the IRS as a tax-exempt 501(c)(3) public charity.",
-    meetingWelcome: "We welcome independent recovery groups from a variety of fellowships and are actively expanding the meeting schedule."
+    meetingWelcome: "We welcome independent recovery groups from all fellowships and are actively expanding the schedule.",
+    meetingChairInvitation: "Would you like to chair a meeting or add one for your fellowship? Email us at",
+    meetingFellowshipInvitation: "We encourage all fellowships to contact us, including Alcoholics Anonymous (AA), Narcotics Anonymous (NA), Cocaine Anonymous (CA), Crystal Meth Anonymous (CMA), and others."
   },
 
   address: {
